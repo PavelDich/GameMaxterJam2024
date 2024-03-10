@@ -12,6 +12,8 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         public GameObject[] LocalObjects;
         public GameObject[] GlobalObjects;
 
+        [SerializeField]
+        private bool isLocalGame;
         public UnityEvent OnUseItem;
         public UnityEvent OnGrabItem;
         public UnityEvent OnDropItem;
@@ -36,7 +38,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         }
         private void FixedUpdate()
         {
-            if (isOwned) return;
+            if (isOwned && !isLocalGame) return;
             if (math.abs(Input.GetAxis("Horizontal")) > 0.5f || math.abs(Input.GetAxis("Vertical")) > 0.5f)
                 if (!Input.GetKey(KeyCode.LeftShift))
                     OnBodyMove.Invoke(new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")));
@@ -55,6 +57,8 @@ namespace GCinc.GameMaxterJam2024.PavelDich
                     OnDropItem.Invoke();
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                     OnUseItem.Invoke();
+                if (Input.GetKeyDown(KeyCode.Space) && isLocalPlayer)
+                    OnJump.Invoke();
             }
             else
             {

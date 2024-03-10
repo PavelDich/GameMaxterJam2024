@@ -16,7 +16,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         public Rigidbody Rigidbody { get; private set; }
         public NetworkIdentity NetworkIdentity { get; private set; }
 
-        [SyncVar]
+        [SyncVar, HideInInspector]
         public bool isGrubed = false;
         protected override void OnValidate()
         {
