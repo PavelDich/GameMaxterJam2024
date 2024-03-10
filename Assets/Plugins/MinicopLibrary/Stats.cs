@@ -44,9 +44,8 @@ namespace Minicop.Library.Stats
 
         public void ChangeMax(float newValue)
         {
-            float oldValue = Max;
             Max = newValue;
-            OnChenges.Max.Invoke(oldValue, newValue);
+            OnChenge.Invoke(this);
         }
 
         [SerializeField]
@@ -68,9 +67,8 @@ namespace Minicop.Library.Stats
 
         public void ChangeValue(float newValue)
         {
-            float oldValue = Value;
             Value = newValue;
-            OnChenges.Value.Invoke(oldValue, newValue);
+            OnChenge.Invoke(this);
         }
 
 
@@ -100,12 +98,6 @@ namespace Minicop.Library.Stats
         [field: SerializeField]
         public virtual float RegenerationDelay { get; protected set; } = 0;
 
-        public Events OnChenges;
-        [Serializable]
-        public struct Events
-        {
-            public UnityEvent<float, float> Max;
-            public UnityEvent<float, float> Value;
-        }
+        public UnityEvent<Parameter> OnChenge;
     }
 }
