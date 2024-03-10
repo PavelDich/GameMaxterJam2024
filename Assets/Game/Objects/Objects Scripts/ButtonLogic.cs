@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class ButtonLogic : GetterObject
 {
-    // Геттер - реагирует на любые RigidBody.
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         ChangeState(true);
+        audioSource.Play();
     }
 
     private void OnTriggerExit(Collider other)

@@ -7,8 +7,16 @@ public class OpeningDoor : SetterObject
 {
     [SerializeField] Animator _animator;
 
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     internal override void ChangeState(bool newstate)
     {
+        if (newstate) { audioSource.Play(); }
        _animator.SetBool("Open", newstate);
     }
 }
