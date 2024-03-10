@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
         agent.destination = waypoints[destPoint].position;
         destPoint = (destPoint + 1) % waypoints.Length;
         Vector3 directionToWaypoint = (waypoints[destPoint].position - transform.position).normalized;
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, directionToWaypoint, rotationSpeed * Time.deltaTime, 1.0f);
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, directionToWaypoint, rotationSpeed * Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDirection);
     }
     private void Update()
