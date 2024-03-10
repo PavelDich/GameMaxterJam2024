@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SetterObject : InteractionBase
 {
-    // Общий класс предметов с которыми игрок взаимодействует
+    // Сеттеры - объекты, которые реагируют на изменение индекса своей группы.
     [SerializeField] public int _index = 0;
 
     internal bool _enabled = false;
@@ -14,6 +14,7 @@ public class SetterObject : InteractionBase
         _setters.Add(gameObject);
     }
 
+    // Реакция на изменение индекса группы.
     internal virtual void ChangeState(bool newstate)
     {
         _enabled = newstate;

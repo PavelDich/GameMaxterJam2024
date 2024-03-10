@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class MirrorReflection : LazerSelect
 {
+    // Объект, отражающий лазерный луч, сохраняя угол.
+    // Примечание - лазер отражающийся между двух параллельных зеркал совершить только 2 итерации.
+
     public float defaultLenght = 50;
 
-    private LineRenderer _lineRenderer;
     public RaycastHit hit;
 
+    private GameObject _originOfLazer;
+    private LineRenderer _lineRenderer;
     private LazerSelect _oldSelect;
 
     private void Start()
@@ -18,16 +22,26 @@ public class MirrorReflection : LazerSelect
 
     public override void Select(GameObject gm)
     {
-        ReflectLazer(gm);
+        _originOfLazer = gm;
+        _lineRenderer.enabled = true;
+        ReflectLazer(_originOfLazer);
     }
 
     public override void Deslect(GameObject gm)
     {
-        _lineRenderer.enabled= false;
+        if ((gm.GetComponent<LazerSelect>() != _oldSelect || !gm.GetComponent<LazerSelect>()) && _oldSelect) 
+        {  
+            _oldSelect.Deslect(gameObject);
+        }
+        _lineRenderer.enabled = false;
+        _oldSelect = null;
     }
 
     void ReflectLazer(GameObject gm)
     {
+        // Векторная алгебра + нечитаемый код.
+        // Буду исправлять.
+
         Vector3 startPos;
         if (gm.GetComponent<RayStart>())
         {
@@ -37,42 +51,47 @@ public class MirrorReflection : LazerSelect
         {
             startPos = gm.GetComponent<MirrorReflection>().hit.point;
         }
-        startPos.y = transform.position.y;
 
         Vector3 forw = (transform.position - gm.transform.position).normalized;
-        forw = Vector3.Reflect(forw, transform.position);
-        forw.y = transform.position.y;
+        forw = Vector3.Reflect(forw, transform.forward);
 
         _lineRenderer.SetPosition(0, startPos);
 
-        Ray ray = new Ray(transform.position, forw);
+        Ray ray = new Ray(startPos, forw);
 
-        Debug.DrawRay(transform.position, forw * defaultLenght, Color.red);
+        Debug.DrawRay(startPos, forw * defaultLenght, Color.red);
 
-        RaycastHit hit;
+        // Очень много проверок.
+        // Выполняются каждый кадр, когда зеркало активно.
+        // Буду работать.
 
         if (Physics.Raycast(ray, out hit))
         {
             _lineRenderer.SetPosition(1, hit.point);
 
             LazerSelect selectable = hit.collider.gameObject.GetComponent<LazerSelect>();
-            if (selectable != _oldSelect && _oldSelect)
-            {
-                _oldSelect.Deslect(gameObject);
-            }
             if (selectable)
             {
-                selectable.Select(gameObject);
+                if (gm != gameObject && (gm.GetComponent<LazerSelect>() != _oldSelect || !gm.GetComponent<LazerSelect>()))
+                {
+                    selectable.Select(gameObject);
+                }
+                if (selectable == _oldSelect)
+                {
+                    return;
+                }
                 _oldSelect = selectable;
+                return;
             }
         }
-        else if (_oldSelect)
+        if ((gm.GetComponent<LazerSelect>() != _oldSelect || !gm.GetComponent<LazerSelect>()) && _oldSelect)
         {
-            _lineRenderer.SetPosition(1, transform.forward * defaultLenght);
             _oldSelect.Deslect(gameObject);
         }
-
-
+        if (_lineRenderer.enabled)
+        {
+            _lineRenderer.SetPosition(1, forw * defaultLenght);
+        }
     }
 
 

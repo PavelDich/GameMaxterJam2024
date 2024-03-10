@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ButtonLogic : GetterObject
 {
-    // Скрипт кнопки
-    [SerializeField] private BoxCollider _bc;
+    // Геттер - реагирует на любые RigidBody.
 
     private void OnTriggerEnter(Collider other)
     {

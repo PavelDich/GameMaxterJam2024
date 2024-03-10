@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LazerSelect : GetterObject
 {
+    // Геттер - реагирует на лазер.
+    // Так же родительский класс для зеркал.
+
     Renderer _rend;
 
     public void Start()
