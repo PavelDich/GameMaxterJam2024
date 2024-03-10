@@ -11,12 +11,12 @@ public class Enemy : MonoBehaviour
     public float DetectionDistance = 3f;
     public Transform EnemyEye;
     public Transform Target;
-    public List<Transform> targets; 
     private NavMeshAgent agent;
     private float rotationSpeed;
     private Transform agentTransform;
     private AudioSource audioSource;
-    int gavno;
+    public Transform[] waypoints;
+    private int destPoint = 0;
 
     private void Awake()
     {
@@ -29,6 +29,17 @@ public class Enemy : MonoBehaviour
         rotationSpeed = agent.angularSpeed;
         agentTransform = agent.transform;
         audioSource = GetComponent<AudioSource>();
+    }
+    void GotoNextPoint()
+    {
+        if (waypoints.Length == 0)
+            return;
+
+        agent.destination = waypoints[destPoint].position;
+        destPoint = (destPoint + 1) % waypoints.Length;
+        Vector3 directionToWaypoint = (waypoints[destPoint].position - transform.position).normalized;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, directionToWaypoint, rotationSpeed * Time.deltaTime, 1.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
     }
     private void Update()
     {
@@ -43,17 +54,11 @@ public class Enemy : MonoBehaviour
         {
             audioSource.mute = true;
         }
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            GotoNextPoint();
         //DrawViewState();
-        if (agent.transform.position == agent.pathEndPosition)
-        {
-            TargetRandom();
-        }
-        agent.SetDestination(targets[gavno].position);
     }
-    void TargetRandom()
-    {
-        gavno = Random.Range(0, targets.Count);
-    }
+
     private bool IsInView() 
     {
         float realAngle = Vector3.Angle(EnemyEye.forward, Target.position - EnemyEye.position);
