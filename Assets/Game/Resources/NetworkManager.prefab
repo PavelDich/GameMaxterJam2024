@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3935385318462063404}
   - component: {fileID: -1412217723143826782}
   - component: {fileID: 3935385318462063405}
-  - component: {fileID: 7425798039939082245}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -53,8 +52,8 @@ MonoBehaviour:
   sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
-  offlineScene: Assets/Game/Level/Scenes/Menu/MenuMain.unity
-  onlineScene: Assets/Game/Level/Scenes/Game/GameLevel.unity
+  offlineScene: 
+  onlineScene: 
   transport: {fileID: 3935385318462063405}
   networkAddress: localhost
   maxConnections: 100
@@ -111,17 +110,3 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &7425798039939082245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3935385318462063407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
