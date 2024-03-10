@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ItemType
 {
     Box,
-    Test
+   
 }
 
 public class Item : MonoBehaviour
@@ -22,10 +22,7 @@ public class Item : MonoBehaviour
             GetComponentInParent<Animator>().SetBool("Close", !flag);
 
         }
-        if (type == ItemType.Test)
-        {
-            Destroy(gameObject);
-        }
+      
     }
        
     
