@@ -613,7 +613,7 @@ MonoBehaviour:
   - {fileID: 4778161093415906390}
   GlobalObjects:
   - {fileID: 3517334214874346313}
-  isLocalGame: 1
+  isLocalGame: 0
   OnUseItem:
     m_PersistentCalls:
       m_Calls:
