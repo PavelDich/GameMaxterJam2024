@@ -89,7 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed87ae2afa62cbf498d98f6bd65f3391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   _parameterImage: {fileID: 5387483807445236270}
+  _networkIdentity: {fileID: 0}
 --- !u!1 &2485955218996379362
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +502,7 @@ MonoBehaviour:
   _head: {fileID: 3556089888936443456}
   <JumpForce>k__BackingField: 250
   <JumpStaminaUse>k__BackingField: 20
-  <GroundDistance>k__BackingField: 1.5
+  <GroundDistance>k__BackingField: 1
   <Ground>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
@@ -606,6 +610,7 @@ MonoBehaviour:
   syncInterval: 0
   LocalObjects:
   - {fileID: 3556089889473983438}
+  - {fileID: 4778161093415906390}
   GlobalObjects:
   - {fileID: 3517334214874346313}
   isLocalGame: 1
@@ -768,7 +773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3359680803748997329
 RectTransform:
   m_ObjectHideFlags: 0
@@ -941,4 +946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed87ae2afa62cbf498d98f6bd65f3391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   _parameterImage: {fileID: 5845315235782241844}
+  _networkIdentity: {fileID: 0}

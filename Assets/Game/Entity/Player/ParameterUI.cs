@@ -1,21 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 using Minicop.Library.Stats;
+using Mirror;
 
 namespace GCinc.GameMaxterJam2024.PavelDich
 {
     [RequireComponent(typeof(Image))]
-    public class ParameterUI : MonoBehaviour
+    public class ParameterUI : NetworkBehaviour
     {
         [SerializeField, HideInInspector]
         private Image _parameterImage;
-        public void UpdateValue(Parameter parameter) =>
-            _parameterImage.fillAmount = parameter.Value / parameter.Max;
+        [SerializeField, HideInInspector]
+        private NetworkIdentity _networkIdentity;
+        public void UpdateValue(Parameter parameter)
+        {
+            CmdUpdateValue(parameter.Value / parameter.Max);
+            [Command(requiresAuthority = false)]
+            void CmdUpdateValue(float value) => RpcUpdateValue(value);
+            [Server, ClientRpc]
+            void RpcUpdateValue(float value) => _parameterImage.fillAmount = value;
+        }
 
-        public void OnValidate() =>
+        protected override void OnValidate()
+        {
+            base.OnValidate();
             _parameterImage = GetComponent<Image>();
+            _networkIdentity = GetComponentInParent<NetworkIdentity>();
+        }
     }
 }

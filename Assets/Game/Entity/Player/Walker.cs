@@ -86,18 +86,20 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             Vector3 moveDirection = transform.TransformDirection(new Vector3(vector.x, 0f, vector.z));
             _rigidbody.velocity = moveDirection * SpeedMove + new Vector3(0f, _rigidbody.velocity.y, 0f);
 
-            Stamina.ChangeValue(Stamina.Value );
+            Stamina.Regeneration(this);
         }
 
         public void Sprint(Vector3 vector) => CmdSprint(vector);
         [Command(requiresAuthority = false)]
         private void CmdSprint(Vector3 vector)
         {
-            if (Stamina.Value < SprintStaminaUse) return;
-            Vector3 moveDirection = transform.TransformDirection(new Vector3(vector.x, 0f, vector.z));
-            _rigidbody.velocity = moveDirection * SpeedSprint + new Vector3(0f, _rigidbody.velocity.y, 0f);
-
             Stamina.ChangeValue(Stamina.Value - SprintStaminaUse * Time.fixedDeltaTime);
+            if (Stamina.Value > 0)
+            {
+                Vector3 moveDirection = transform.TransformDirection(new Vector3(vector.x, 0f, vector.z));
+                _rigidbody.velocity = moveDirection * SpeedSprint + new Vector3(0f, _rigidbody.velocity.y, 0f);
+            }
+            else CmdMove(vector);
         }
 
         public void Jump() => CmdJump();

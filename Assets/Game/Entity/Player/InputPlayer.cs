@@ -57,7 +57,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
                     OnDropItem.Invoke();
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                     OnUseItem.Invoke();
-                if (Input.GetKeyDown(KeyCode.Space) && isLocalPlayer)
+                if (Input.GetKeyDown(KeyCode.Space) && isLocalGame)
                     OnJump.Invoke();
             }
             else
