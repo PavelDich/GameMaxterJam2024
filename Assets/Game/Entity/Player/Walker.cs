@@ -26,6 +26,8 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         [field: SerializeField, Header("Parameters")]
         public float JumpForce { get; private set; } = 250;
         [field: SerializeField]
+        public float JumpStaminaUse { get; private set; } = 20;
+        [field: SerializeField]
         public float GroundDistance { get; private set; } = 1;
         [field: SerializeField]
         public LayerMask Ground { get; private set; }
@@ -34,15 +36,17 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         public float SpeedMove { get; private set; } = 5;
         [field: SerializeField]
         public float SpeedSprint { get; private set; } = 10;
+        [field: SerializeField]
+        public float SprintStaminaUse { get; private set; } = 1;
 
 
         public Parameter Stamina = new Parameter();
         [SyncVar(hook = nameof(StaminaSyncing))]
         public float StaminaSync;
         private void StaminaSyncing(float oldValue, float newValue) => Stamina.Value = newValue;
-        private void CheckStamina(float oldValue, float newValue)
+        private void CheckStamina(Parameter parameter)
         {
-            if (oldValue > newValue) Stamina.Regeneration(this);
+            if (StaminaSync > parameter.Value) Stamina.Regeneration(this);
 
             CmdSync(Stamina.Value);
             [Command(requiresAuthority = false)] void CmdSync(float newValue) => SrvSync(newValue);
@@ -69,47 +73,46 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         }
         protected virtual void Start()
         {
-            Stamina.OnChenges.Value.AddListener(CheckStamina);
+            Stamina.OnChenge.AddListener(CheckStamina);
         }
 
 
 
-        public void Move(Vector3 vector)
-        {
-            CmdMove(vector);
-        }
+        public void Move(Vector3 vector) => CmdMove(vector);
+
         [Command(requiresAuthority = false)]
         private void CmdMove(Vector3 vector)
         {
             Vector3 moveDirection = transform.TransformDirection(new Vector3(vector.x, 0f, vector.z));
             _rigidbody.velocity = moveDirection * SpeedMove + new Vector3(0f, _rigidbody.velocity.y, 0f);
+
+            Stamina.Regeneration(this);
         }
 
-        public void Sprint(Vector3 vector)
-        {
-            CmdSprint(vector);
-        }
+        public void Sprint(Vector3 vector) => CmdSprint(vector);
         [Command(requiresAuthority = false)]
         private void CmdSprint(Vector3 vector)
         {
-            Vector3 moveDirection = transform.TransformDirection(new Vector3(vector.x, 0f, vector.z));
-            _rigidbody.velocity = moveDirection * SpeedSprint + new Vector3(0f, _rigidbody.velocity.y, 0f);
-
-            Stamina.ChangeValue(Stamina.Value - 1 * Time.fixedDeltaTime);
+            Stamina.ChangeValue(Stamina.Value - SprintStaminaUse * Time.fixedDeltaTime);
+            if (Stamina.Value > 0)
+            {
+                Vector3 moveDirection = transform.TransformDirection(new Vector3(vector.x, 0f, vector.z));
+                _rigidbody.velocity = moveDirection * SpeedSprint + new Vector3(0f, _rigidbody.velocity.y, 0f);
+            }
+            else CmdMove(vector);
         }
 
-        public void Jump()
-        {
-            CmdJump();
-        }
+        public void Jump() => CmdJump();
+
         [Command(requiresAuthority = false)]
         private void CmdJump()
         {
+            if (Stamina.Value < JumpStaminaUse) return;
             RaycastHit[] hitColliders = Physics.RaycastAll(_transform.position, Vector3.down, GroundDistance, Ground);
             if (hitColliders.Length <= 0) return;
 
             _rigidbody.AddForce(new Vector3(0f, JumpForce, 0f));
-            Stamina.ChangeValue(Stamina.Max);
+            Stamina.ChangeValue(Stamina.Value - 20);
         }
 
         public void Rotate(Vector3 rotation, Vector3 sensativity)

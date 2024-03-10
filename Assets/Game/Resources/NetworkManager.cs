@@ -8,8 +8,9 @@ namespace GCinc.GameMaxterJam2024.PavelDich
 {
     public class NetworkManager : Mirror.NetworkManager
     {
+        [Scene]
         [SerializeField]
-        private int _startSceneID;
+        private string _startScene;
         public bool playerSpawned;
 
 
@@ -42,10 +43,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         public void Create()
         {
             if (!NetworkClient.isConnected && !NetworkServer.active)
-            {
                 StartHost();
-                LoadScene(_startSceneID);
-            }
         }
 
         public void Connect(string ipAdress)
@@ -54,7 +52,8 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             {
                 networkAddress = ipAdress;
                 StartClient();
-                if (isNetworkActive) SceneManager.LoadScene(_startSceneID);
+                if (isNetworkActive)
+                    StartClient();
             }
         }
 

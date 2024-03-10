@@ -9,7 +9,6 @@ namespace GCinc.GameMaxterJam2024.PavelDich
 {
     public class Inventory : NetworkBehaviour
     {
-        private Transform _transform;
         public NetworkIdentity NetworkIdentity { get; private set; }
 
         public Item Item { get; private set; }
@@ -25,7 +24,6 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         protected override void OnValidate()
         {
             base.OnValidate();
-            _transform = GetComponent<Transform>();
             NetworkIdentity = GetComponent<NetworkIdentity>();
             if (_hand == null) Debug.LogError("Please change hand");
             if (_head == null) Debug.LogError("Please change head");
@@ -50,7 +48,6 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         [ClientRpc]
         protected void RpcGrab(NetworkIdentity itemNetID)
         {
-            Debug.Log("5");
             Item item = itemNetID.GetComponent<Item>();
             item.Transform.SetParent(_hand, true);
             item.Collider.enabled = false;

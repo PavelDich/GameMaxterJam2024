@@ -14,9 +14,9 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         [SyncVar(hook = nameof(HealthSyncing))]
         public float HealthSync;
         private void HealthSyncing(float oldValue, float newValue) => Health.Value = newValue;
-        private void CheckHealth(float oldValue, float newValue)
+        private void CheckHealth(Parameter parameter)
         {
-            if (oldValue > newValue) Health.Regeneration(this);
+            if (HealthSync > parameter.Value) Health.Regeneration(this);
 
             CmdSync(Health.Value);
             [Command(requiresAuthority = false)] void CmdSync(float newValue) => SrvSync(newValue);
@@ -32,7 +32,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         }
         protected virtual void Start()
         {
-            Health.OnChenges.Value.AddListener(CheckHealth);
+            Health.OnChenge.AddListener(CheckHealth);
         }
     }
 }
