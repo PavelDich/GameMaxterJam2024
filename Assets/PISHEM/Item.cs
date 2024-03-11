@@ -11,7 +11,7 @@ public enum ItemType
 public class Item : MonoBehaviour
 {
     public ItemType type;
-    bool flag = false;
+    bool flag = true;
 
     public void Interaction()
     {
