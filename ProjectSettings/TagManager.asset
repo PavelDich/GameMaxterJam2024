@@ -4,18 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Point
-  - Item
+  - asteroid
+  - ship
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - Post
+  - Ground
+  - Item
+  - Logic
   - 
   - 
   - 
