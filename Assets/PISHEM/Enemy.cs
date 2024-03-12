@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
@@ -101,6 +102,17 @@ public class Enemy : MonoBehaviour
         Debug.DrawLine(EnemyEye.position, left, Color.yellow);
         Debug.DrawLine(EnemyEye.position, right, Color.yellow);
     }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            ReloadScene();
+        }
+    }
+    public void ReloadScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
 
-
+        SceneManager.LoadScene(currentScene.name);
+    }
 }

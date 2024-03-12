@@ -6,8 +6,8 @@ using UnityEngine;
 public class Interaction : MonoBehaviour
 {
         public Text indicator;
-    
-        void Update()
+        public GameObject panel1;
+    void Update()
         {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, 2))
@@ -19,20 +19,22 @@ public class Interaction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
                 {
                     hit.collider.GetComponent<Item>().Interaction();
+                    
                 }
-               
+
             }
             else
             {
                 indicator.enabled = false;
-                
+                //GetComponent<Item>().ClosePismo();
                 
             }
         }
         else
         {
             indicator.enabled = false;
+            panel1.SetActive(false);
         }
-        
+
     }
 }
