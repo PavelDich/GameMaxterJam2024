@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 7167674204551082217}
   - component: {fileID: 7167674204551082218}
   - component: {fileID: 7167674204551082219}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Mirror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,9 +118,11 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _isActiveted: 0
   OnActivated:
     m_PersistentCalls:
       m_Calls: []
+  _isEnabled: 1
   OnEnabled:
     m_PersistentCalls:
       m_Calls: []

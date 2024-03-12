@@ -35,6 +35,8 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             foreach (GameObject globalObject in GlobalObjects)
                 globalObject.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+            _sensativityX = PlayerPrefs.GetFloat(Settings.SaveNameSensativityX);
+            _sensativityY = PlayerPrefs.GetFloat(Settings.SaveNameSensativityY);
         }
         private void FixedUpdate()
         {

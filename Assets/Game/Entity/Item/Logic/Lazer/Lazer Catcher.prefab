@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1454302868030185152}
   - component: {fileID: 1454302868030185155}
   - component: {fileID: 3443514712763418293}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Lazer Catcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,9 +114,11 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _isActiveted: 0
   OnActivated:
     m_PersistentCalls:
       m_Calls: []
+  _isEnabled: 1
   OnEnabled:
     m_PersistentCalls:
       m_Calls: []

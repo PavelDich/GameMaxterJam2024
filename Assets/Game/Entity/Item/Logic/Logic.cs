@@ -29,6 +29,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             }
         }
         public UnityEvent<bool> OnActivated = new UnityEvent<bool>();
+        public void SetIsActiveted(bool value) => IsActiveted = value;
 
         [SyncVar, SerializeField]
         protected bool _isEnabled = true;
@@ -50,5 +51,6 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             }
         }
         public UnityEvent<bool> OnEnabled = new UnityEvent<bool>();
+        public void SetIsEnabled(bool value) => IsEnabled = value;
     }
 }

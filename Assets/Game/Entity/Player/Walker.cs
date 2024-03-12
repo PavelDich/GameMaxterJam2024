@@ -115,17 +115,20 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             Stamina.ChangeValue(Stamina.Value - 20);
         }
 
-        public void Rotate(Vector3 rotation, Vector3 sensativity)
-        {
+        public void Rotate(Vector3 rotation, Vector3 sensativity) =>
             CmdRotate(rotation, sensativity);
-            _rotationY -= rotation.y * sensativity.y * 0.02f;
-            _head.localRotation = Quaternion.Euler(Mathf.Clamp(_rotationY, -80f, 80f), 0f, 0f);
-        }
         [Command(requiresAuthority = false)]
         private void CmdRotate(Vector3 rotation, Vector3 sensativity)
         {
+            _rotationY -= rotation.y * sensativity.y * 0.02f;
             _rotationX += rotation.x * sensativity.x * 0.02f;
-            _transform.rotation = Quaternion.Euler(0f, _rotationX, 0f);
+            RpcRotate(_rotationX, _rotationY);
+        }
+        [ClientRpc]
+        private void RpcRotate(float rotationX, float rotationY)
+        {
+            _head.localRotation = Quaternion.Euler(Mathf.Clamp(rotationY, -80f, 80f), 0f, 0f);
+            _transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
         }
     }
 }

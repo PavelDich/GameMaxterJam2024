@@ -21,7 +21,18 @@ namespace GCinc.GameMaxterJam2024.PavelDich
         }
         void Update()
         {
-            if (IsEnabled) LazerBeam();
+            if (IsEnabled) 
+            {
+                _lineRenderer.enabled = true;
+                LazerBeam();
+                return;
+            }
+            else if (_oldSelect) 
+            {
+                _oldSelect.Deslect(gameObject);
+                _oldSelect = null;
+            }
+            _lineRenderer.enabled = false;
         }
 
         private void LazerBeam()
@@ -48,7 +59,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             }
             else
             {
-                _lineRenderer.SetPosition(1, transform.forward * defaultLenght);
+                _lineRenderer.SetPosition(1, transform.forward * defaultLenght + transform.position);
             }
             if (_oldSelect)
             {

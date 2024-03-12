@@ -56,7 +56,8 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             }
 
             Vector3 forw = (transform.position - gm.transform.position).normalized;
-            forw = Vector3.Reflect(forw, transform.forward);
+            forw = Vector3.Reflect(forw, Quaternion.Euler(0, 90, 0) * transform.forward);
+            //forw.y = (transform.position - gm.transform.position).y;
 
             _lineRenderer.SetPosition(0, startPos);
 
@@ -93,7 +94,7 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             }
             if (_lineRenderer.enabled)
             {
-                _lineRenderer.SetPosition(1, forw * defaultLenght);
+                _lineRenderer.SetPosition(1, (ray.direction * defaultLenght) + startPos);
             }
         }
     }
