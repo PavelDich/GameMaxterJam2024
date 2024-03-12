@@ -53,7 +53,7 @@ MonoBehaviour:
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
   offlineScene: Assets/Game/Interface/Menu/Menu.unity
-  onlineScene: Assets/Game/Level/GameScane.unity
+  onlineScene: Assets/Game/Level/Hospital.unity
   transport: {fileID: 3935385318462063405}
   networkAddress: localhost
   maxConnections: 100
