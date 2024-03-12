@@ -53,9 +53,9 @@ namespace GCinc.GameMaxterJam2024.PavelDich
             {
                 OnHeadMove.Invoke(new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")),
                         new Vector3(_sensativityX, _sensativityY));
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.E))
                     OnGrabItem.Invoke();
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.E))
                     OnDropItem.Invoke();
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                     OnUseItem.Invoke();

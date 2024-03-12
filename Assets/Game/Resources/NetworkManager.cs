@@ -8,16 +8,15 @@ namespace GCinc.GameMaxterJam2024.PavelDich
 {
     public class NetworkManager : Mirror.NetworkManager
     {
-        [Scene]
-        [SerializeField]
-        private string _startScene;
         public bool playerSpawned;
+        public List<GameObject> Players = new List<GameObject>();
 
 
         public void OnCreateCharacter(NetworkConnectionToClient conn, PosMessage message)
         {
             Transform startPos = GetStartPosition();
-            GameObject go = Instantiate(playerPrefab, message.vector3, Quaternion.identity);
+            GameObject go = Instantiate(playerPrefab, startPositions[0].position, Quaternion.identity);
+            Players.Add(go);
             NetworkServer.AddPlayerForConnection(conn, go);
         }
         public override void OnStartServer()

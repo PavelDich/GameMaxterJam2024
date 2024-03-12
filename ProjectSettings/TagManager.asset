@@ -6,6 +6,9 @@ TagManager:
   tags:
   - asteroid
   - ship
+  - Point
+  - Item
+  - Pismo
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GCinc.GameMaxterJam2024.PavelDich;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,30 +10,14 @@ public enum ItemType
     Pismo
 }
 
-public class Item : MonoBehaviour
+public class Item : Logic
 {
-    public ItemType type;
-    bool flag = true;
-    public GameObject panel;
+    public Item() => IsActiveted = true;
 
     public void Interaction()
     {
-        if (type == ItemType.Box)
-        {
-            flag = !flag;
-            GetComponentInParent<Animator>().SetBool("Open", flag);
-            GetComponentInParent<Animator>().SetBool("Close", !flag);
-
-        }
-        if (type == ItemType.Pismo)
-        {
-            panel.SetActive(true);
-
-        }
+        IsActiveted = !IsActiveted;
+        GetComponentInParent<Animator>().SetBool("Open", IsActiveted);
+        GetComponentInParent<Animator>().SetBool("Close", !IsActiveted);
     }
-    public void ClosePismo()
-    {
-        panel.SetActive(false);
-    }
-    
 }
